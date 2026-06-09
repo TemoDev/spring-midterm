@@ -8,6 +8,7 @@ import com.example.library.exception.ResourceNotFoundException;
 import com.example.library.mapper.AuthorMapper;
 import com.example.library.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +58,7 @@ public class AuthorService {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public void delete(Long id) {
         if (!authorRepository.existsById(id)) {
             throw new ResourceNotFoundException("Author not found with id: " + id);

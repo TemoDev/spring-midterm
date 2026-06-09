@@ -10,6 +10,7 @@ import com.example.library.mapper.BookMapper;
 import com.example.library.repository.AuthorRepository;
 import com.example.library.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,6 +71,7 @@ public class BookService {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public void delete(Long id) {
         if (!bookRepository.existsById(id)) {
             throw new ResourceNotFoundException("Book not found with id: " + id);
